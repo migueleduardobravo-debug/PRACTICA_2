@@ -62,3 +62,4 @@ The database is automatically initialized on first run.
 - SQLite
 - Bootstrap 5.3
 - Jinja2 + Bootstrap Icons
+Prueba de firma GPG realizada el Fri Apr 17 19:12:17 CEST 2026
