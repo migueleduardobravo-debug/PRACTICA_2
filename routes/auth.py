@@ -6,7 +6,12 @@ from server import app
 def login():
     if 'username' in session:
         return redirect('/dashboard')
-    next_url = request.args.get('next', '/dashboard')
+from urllib.parse import urlparse
+
+# ... dentro de la función login ...
+if not next_url or urlparse(next_url).netloc != '':
+    next_url = '/dashboard'
+return redirect(next_url)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
