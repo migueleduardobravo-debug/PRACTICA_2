@@ -17,3 +17,14 @@ def not_found(e):
 def forbidden(e):
     return render_template('errors/403.html'), 403
 
+@app.after_request
+def set_security_headers(response):
+    # Bloquea que la web se cargue en un iframe de otro sitio
+    response.headers['X-Frame-Options'] = 'DENY'
+    # Evita que el navegador intente adivinar el tipo de contenido (MIME Sniffing)
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    # Política básica de seguridad de contenido
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    # Oculta la versión del servidor
+    response.headers['Server'] = 'Hidden'
+    return response
