@@ -1,13 +1,15 @@
 import sqlite3
 import os
-import hashlib
 
 DB_DIR = os.path.join(os.path.dirname(__file__), '..', 'db')
 USERS_DB = os.path.join(DB_DIR, 'users.db')
 DATA_DB = os.path.join(DB_DIR, 'data.db')
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 def hash_password(password):
-    return hashlib.md5(password.encode()).hexdigest()
+    # Esto genera un hash con sal (salt) automática y un algoritmo fuerte
+    return generate_password_hash(password, method='pbkdf2:sha256')
 
 def ensure_users_db():
     # Primero, asegurarse de que las tablas de datos existen (empresas, comentarios)
