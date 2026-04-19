@@ -1,7 +1,26 @@
+# Company Management Platform - Remediación de Seguridad
+
+Link del repositorio: https://github.com/migueleduardobravo-debug/PRACTICA_2
+
+Este repositorio contiene la versión auditada y saneada de la plataforma de gestión de NovaCorp. La remediación se ha centrado en mitigar vulnerabilidades críticas de Inyección SQL y deficiencias en el manejo de sesiones y criptografía.
+
+## Seguridad e Integridad
+- **Commits Firmados:** Todos los commits de este repositorio han sido firmados digitalmente mediante GPG para asegurar la trazabilidad y autoría de los cambios.
+- **Análisis SAST:** El código ha sido verificado con Bandit, alcanzando una puntuación de "0 hallazgos" de severidad Alta/Media.
+
+## Tecnologías Utilizadas
+- **Lenguaje:** Python 3.x
+- **Framework:** Flask
+- **Base de Datos:** SQLite
+- **Hashing:** PBKDF2 con SHA-256 (vía Werkzeug)
+
+## Instrucciones de Ejecución
+
+### 1. Clonar y configurar entorno
+
 # 🛡️ Company Management Platform - Remediación de Seguridad
 
-Este repositorio contiene la auditoría técnica y la remediación de vulnerabilidades de la plataforma de gestión de NovaCorp, realizada
-por Miguel Eduardo Bravo como parte del Máster en Ciberseguridad.
+Este repositorio contiene la auditoría técnica y la remediación de vulnerabilidades de la plataforma de gestión de NovaCorp, realizada como parte del Máster en Ciberseguridad.
 
 ## 📋 Resumen del Proyecto
 Se ha transformado una aplicación con múltiples vulnerabilidades críticas (SQLi, XSS, MD5) en un sistema endurecido siguiendo estándares **OWASP Top 10**.
@@ -14,68 +33,27 @@ Es fundamental usar un entorno virtual para aislar las dependencias:
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-# NovaCorp — Company Management Platform
+2. Reinicializar la Base de Datos Importante: Debido a la migración de MD5 a PBKDF2-SHA256, las contraseñas antiguas no funcionarán. Debes resetear la DB para aplicar el nuevo hashing:Bashpython3 init_db.py
+3. Lanzar la aplicaciónBashpython3 main.py
+Acceso local: http://localhost:5000 Medidas de Seguridad ImplementadasCategoríaMejora RealizadaAutenticaciónEliminación de SQL Injection mediante consultas parametrizadas.CriptografíaMigración de MD5 a PBKDF2 con Salting automático.SesionesFlags HttpOnly, SameSite y desactivación de Modo Debug.FrontendEliminación de filtros `RedireccionesValidación de rutas relativas para prevenir Open Redirects.🛠️ Auditoría y TrazabilidadAnálisis SAST: Verificado con Bandit (0 hallazgos críticos tras remediación).Integridad: Todos los commits están firmados digitalmente con GPG para garantizar la autoría de las correcciones.Análisis Manual: Identificación de fallos de lógica no detectados por herramientas automáticas.👤 AutorMiguel Eduardo Bravo - Especialista en Ciberseguridad
+Inicializar Base de Datos
+Es necesario reinicializar la base de datos para generar las tablas con el nuevo formato de hashing seguro (PBKDF2):
 
-**NovaCorp Platform** is an internal web application for managing companies and their associated comments. It supports three roles (`admin`, `owner`, `user`) with different access levels.
+Bash
+python3 init_db.py
+ Ejecutar Aplicación
+Bash
+python3 main.py
+La aplicación estará disponible en http://localhost:5000.
 
----
+ Estructura del Proyecto
+app/: Código fuente de la aplicación.
 
-## Installation
+db/: Lógica de acceso a datos y hashing seguro.
 
-```bash
-pip install -r requirements.txt
-python main.py
-```
+routes/: Controladores con lógica de negocio y validación de parámetros.
 
-Visit: `http://127.0.0.1:5000`
+templates/: Plantillas Jinja2 con sanitización manual (eliminación de filtros |safe).
 
-The database is automatically initialized on first run.
-
----
-
-## Default Users
-
-| Username | Password   | Role   | Notes                      |
-|----------|------------|--------|----------------------------|
-| `alice`  | password1  | user   | Standard employee          |
-| `bob`    | password2  | owner  | Owns "Insegura Corp"       |
-| `admin`  | admin123   | admin  | Full access                |
-
----
-
-## Project Structure
-
-```
-.
-├── main.py                 # Entry point
-├── server.py               # Flask app configuration
-├── db/
-│   └── __init__.py         # Database initialization and helpers
-├── routes/
-│   ├── auth.py             # Login/logout
-│   ├── companies.py        # Company views, dashboard, search
-│   ├── companies_admin.py  # Admin company management
-│   ├── users_admin.py      # Admin user management
-│   └── profile.py          # User profiles
-├── templates/
-│   ├── base.html           # Shared layout
-│   ├── dashboard.html      # Main dashboard
-│   ├── auth/               # Login page
-│   ├── companies/          # Company pages
-│   ├── admin/              # Admin panels
-│   ├── profile/            # User profile pages
-│   └── errors/             # 404, 403 pages
-├── static/
-│   └── css/style.css       # Custom styles
-└── requirements.txt
-```
-
----
-
-## Technologies
-
-- Python 3 + Flask
-- SQLite
-- Bootstrap 5.3
-- Jinja2 + Bootstrap Icons
-Prueba de firma GPG realizada el Fri Apr 17 19:12:17 CEST 2026
+ Autor
+Miguel Eduardo Bravo - Máster en Ciberseguridad.
