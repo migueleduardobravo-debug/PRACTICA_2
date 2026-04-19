@@ -1,7 +1,10 @@
 from flask import Flask, render_template
 
+import os
+
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+# Busca la clave en el sistema, si no existe, usa una por defecto (solo para dev)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev_key_only_for_local_testing')
 # Configuración de Seguridad de Sesión
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,  # Impide que JavaScript acceda a la cookie (Mitiga XSS)
