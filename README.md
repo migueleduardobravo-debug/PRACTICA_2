@@ -1,3 +1,19 @@
+# 🛡️ Company Management Platform - Remediación de Seguridad
+
+Este repositorio contiene la auditoría técnica y la remediación de vulnerabilidades de la plataforma de gestión de NovaCorp, realizada
+por Miguel Eduardo Bravo como parte del Máster en Ciberseguridad.
+
+## 📋 Resumen del Proyecto
+Se ha transformado una aplicación con múltiples vulnerabilidades críticas (SQLi, XSS, MD5) en un sistema endurecido siguiendo estándares **OWASP Top 10**.
+
+## 🚀 Instrucciones de Ejecución (Setup Seguro)
+
+### 1. Preparar el entorno
+Es fundamental usar un entorno virtual para aislar las dependencias:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 # NovaCorp — Company Management Platform
 
 **NovaCorp Platform** is an internal web application for managing companies and their associated comments. It supports three roles (`admin`, `owner`, `user`) with different access levels.
