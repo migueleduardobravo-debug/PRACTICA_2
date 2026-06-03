@@ -28,3 +28,6 @@ http://localhost:5000
 - SAST: Bandit 1.7+
 - Framework: Flask 2.2 + SQLite + Jinja2
 - Commits firmados con GPG
+
+## Repositorio GitHub
+https://github.com/migueleduardobravo-debug/PRACTICA_2
