@@ -16,10 +16,10 @@ def admin_add_company():
     if session.get('role') != 'admin':
         return render_template('errors/403.html'), 403
     if request.method == 'POST':
-        company_name = request.form['company_name']
-        owner = request.form['owner']
+        company_name = request.form.get('company_name', '').strip()
+        owner        = request.form.get('owner', '').strip()
         conn = get_data_connection()
-        conn.execute("INSERT INTO companies (name, owner) VALUES ('"+ company_name+"', '"+owner+"')")
+        conn.execute("INSERT INTO companies (name, owner) VALUES (?, ?)", (company_name, owner))
         conn.commit()
         conn.close()
         flash("Company created successfully.", "success")
@@ -30,10 +30,14 @@ def admin_add_company():
 def delete_company():
     if session.get('role') != 'admin':
         return render_template('errors/403.html'), 403
-    company = request.form['company']
+    try:
+        company_id = int(request.form.get('company', ''))
+    except (ValueError, TypeError):
+        flash("Invalid company ID.", "danger")
+        return redirect('/admin/companies')
     conn = get_data_connection()
-    conn.execute("DELETE FROM companies WHERE id = "+ company)
-    conn.execute("DELETE FROM comments WHERE company_id = " + company)
+    conn.execute("DELETE FROM companies WHERE id = ?", (company_id,))
+    conn.execute("DELETE FROM comments WHERE company_id = ?", (company_id,))
     conn.commit()
     conn.close()
     flash("Company deleted.", "warning")
